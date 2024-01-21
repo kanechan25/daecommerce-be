@@ -30,6 +30,10 @@ const ProductSchema = new Schema({
   imgUrl: {
     type: String,
     default: ""
+  },
+  productType: {
+    type: Schema.Types.ObjectId,
+    ref: "ProductType"
   }
 })
 module.exports = mongoose.model("products", ProductSchema)

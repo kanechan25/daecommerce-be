@@ -39,7 +39,8 @@ const resolver = {
     createUser: async (parent, args, context) => await context.mongoDataMethods.createUser(args),
     updateUser: async (parent, args, context) => await context.mongoDataMethods.updateUser(args),
     createProduct: async (parent, args, context) => await context.mongoDataMethods.createProduct(args),
-    updateProduct: async (parent, args, context) => await context.mongoDataMethods.updateProduct(args)
+    updateProduct: async (parent, args, context) => await context.mongoDataMethods.updateProduct(args),
+    createProductType: async (parent, args, context) => await context.mongoDataMethods.createProductType(args)
   }
 }
 

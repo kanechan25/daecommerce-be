@@ -13,9 +13,9 @@ const typeDefs = gql`
     age: Int
     books: [Book]
   }
-  # type ProductType {
-  #   productTypeName: String!
-  # }
+  type ProductType {
+    productTypeName: String!
+  }
   type Product {
     title: String!
     description: String!
@@ -70,6 +70,7 @@ const typeDefs = gql`
       quantity: Int
       imgUrl: String
     ): Product
+    createProductType(productTypeName: String!): ProductType
     createUser(name: String!, email: String!, password: String!): User
     updateUser(id: ID!, name: String, email: String, password: String, favourites: [ID], inCart: [ID]): User
     deleteUser(id: ID!): User

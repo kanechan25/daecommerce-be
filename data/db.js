@@ -2,7 +2,7 @@ const Author = require("../models/Author")
 const Book = require("../models/Book")
 const User = require("../models/User")
 const Product = require("../models/Product")
-// const ProductType = require("../models/ProductType")
+const ProductType = require("../models/ProductType")
 
 const mongoDataMethods = {
   createAuthor: async (args) => {
@@ -19,42 +19,44 @@ const mongoDataMethods = {
   getAuthorById: async (id) => await Author.findById(id),
 
   // daecommerce app
-  // createProductType: async ({ productTypeName }) => {
-  //   try {
-  //     const productType = new ProductType({
-  //       productTypeName
-  //     })
-  //     await productType.save()
-  //     return productType
-  //   } catch (err) {
-  //     throw new Error("Error creating productType")
-  //   }
-  // },
-  // updateProductType: async ({ id, productTypeName }) => {
-  //   try {
-  //     const productType = await ProductType.findByIdAndUpdate(id, { productTypeName }, { new: true })
-  //     return productType
-  //   } catch (err) {
-  //     throw new Error("Error updating productType")
-  //   }
-  // },
-  // getProductTypes: async () => {
-  //   try {
-  //     const productTypes = await ProductType.find()
-  //     console.log("productTypes", productTypes)
-  //     return productTypes
-  //   } catch (err) {
-  //     throw new Error("Error retrieving productTypes")
-  //   }
-  // },
-  // getProductType: async (id) => {
-  //   try {
-  //     const productType = await ProductType.findById(id)
-  //     return productType
-  //   } catch (err) {
-  //     throw new Error("Error retrieving productType")
-  //   }
-  // },
+  createProductType: async ({ productTypeName }) => {
+    try {
+      const existingProductType = await ProductType.findOne({ productTypeName })
+      if (existingProductType) {
+        console.log("Product type already exists:", existingProductType)
+      } else {
+        const newProductType = new ProductType({ productTypeName })
+        await newProductType.save()
+        return newProductType
+      }
+    } catch (err) {
+      throw new Error("Error creating productType")
+    }
+  },
+  updateProductType: async ({ id, productTypeName }) => {
+    try {
+      const productType = await ProductType.findByIdAndUpdate(id, { productTypeName }, { new: true })
+      return productType
+    } catch (err) {
+      throw new Error("Error updating productType")
+    }
+  },
+  getProductTypes: async () => {
+    try {
+      const productTypes = await ProductType.find()
+      return productTypes
+    } catch (err) {
+      throw new Error("Error retrieving productTypes")
+    }
+  },
+  getProductType: async (id) => {
+    try {
+      const productType = await ProductType.findById(id)
+      return productType
+    } catch (err) {
+      throw new Error("Error retrieving productType")
+    }
+  },
   createProduct: async ({ title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl }) => {
     try {
       const product = new Product({
@@ -119,9 +121,14 @@ const mongoDataMethods = {
   },
   createUser: async ({ name, email, password, favourites }) => {
     try {
-      const user = new User({ name, email, password, favourites })
-      await user.save()
-      return user
+      const existingUser = await User.findOne({ email: email })
+      if (existingUser) {
+        console.log("Email type already exists:", existingProductType)
+      } else {
+        const newUser = new User({ name, email, password, favourites })
+        await newUser.save()
+        return newUser
+      }
     } catch (err) {
       throw new Error("Error creating user")
     }
