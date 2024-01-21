@@ -48,6 +48,7 @@ const typeDefs = gql`
     products: [Product]
     productType(id: ID!): ProductType
     productTypes: [ProductType]
+    productsByProductType(productTypeId: ID!): [Product]
   }
   type Mutation {
     createAuthor(name: String, age: Int): Author

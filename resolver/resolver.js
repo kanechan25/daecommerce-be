@@ -11,7 +11,16 @@ const resolver = {
     },
     users: async (parent, args, context) => await context.mongoDataMethods.getUsers(),
     product: async (parent, args, context) => await context.mongoDataMethods.getProduct(args.id),
-    products: async (parent, args, context) => await context.mongoDataMethods.getProducts()
+    products: async (parent, args, context) => await context.mongoDataMethods.getProducts(),
+    productsByProductType: async (parent, { productTypeId }, context) => {
+      try {
+        const products = await context.mongoDataMethods.getProductsByProductType(productTypeId)
+        return products
+      } catch (error) {
+        console.error("Error retrieving products by product type:", error.message)
+        return []
+      }
+    }
   },
   Book: {
     author: async (parent, args, context) => await context.mongoDataMethods.getAuthorById(parent.authorId)
@@ -32,7 +41,9 @@ const resolver = {
     }
   },
   Product: {
-    productType: async (parent, args, context) => await context.mongoDataMethods.getProductType(parent.id)
+    productType: async (parent, args, context) => {
+      return await context.mongoDataMethods.getProductType(parent.productType)
+    }
   },
   // MUTATION
   Mutation: {

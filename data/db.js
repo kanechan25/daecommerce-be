@@ -115,6 +115,15 @@ const mongoDataMethods = {
       throw new Error("Error retrieving product")
     }
   },
+  getProductsByProductType: async (productTypeId) => {
+    try {
+      // Assuming you have a Product model with a 'productType' field
+      const products = await Product.find({ productType: productTypeId })
+      return products
+    } catch (error) {
+      throw new Error("Error retrieving products by product type")
+    }
+  },
   getUser: async (email) => {
     try {
       const user = await User.findOne({ email: email })
