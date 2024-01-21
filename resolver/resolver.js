@@ -31,7 +31,9 @@ const resolver = {
       return inCart
     }
   },
-
+  Product: {
+    productType: async (parent, args, context) => await context.mongoDataMethods.getProductType(parent.id)
+  },
   // MUTATION
   Mutation: {
     createAuthor: async (parent, args, context) => await context.mongoDataMethods.createAuthor(args),

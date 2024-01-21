@@ -57,7 +57,7 @@ const mongoDataMethods = {
       throw new Error("Error retrieving productType")
     }
   },
-  createProduct: async ({ title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl }) => {
+  createProduct: async ({ title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl, productType }) => {
     try {
       const product = new Product({
         title,
@@ -67,7 +67,8 @@ const mongoDataMethods = {
         reviews,
         isAddedBtn,
         quantity,
-        imgUrl
+        imgUrl,
+        productType
       })
       await product.save()
       return product
@@ -75,11 +76,22 @@ const mongoDataMethods = {
       throw new Error("Error creating product")
     }
   },
-  updateProduct: async ({ id, title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl }) => {
+  updateProduct: async ({
+    id,
+    title,
+    description,
+    price,
+    ratings,
+    reviews,
+    isAddedBtn,
+    quantity,
+    imgUrl,
+    productType
+  }) => {
     try {
       const product = await Product.findByIdAndUpdate(
         id,
-        { title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl },
+        { title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl, productType },
         { new: true }
       )
       return product

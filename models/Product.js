@@ -33,6 +33,7 @@ const ProductSchema = new Schema({
   },
   productType: {
     type: Schema.Types.ObjectId,
+    required: true,
     ref: "ProductType"
   }
 })

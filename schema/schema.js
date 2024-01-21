@@ -14,6 +14,7 @@ const typeDefs = gql`
     books: [Book]
   }
   type ProductType {
+    id: ID!
     productTypeName: String!
   }
   type Product {
@@ -25,6 +26,7 @@ const typeDefs = gql`
     isAddedBtn: Boolean!
     quantity: Int!
     imgUrl: String!
+    productType: ProductType!
   }
 
   type User {
@@ -44,6 +46,8 @@ const typeDefs = gql`
     users: [User]
     product(id: ID!): Product
     products: [Product]
+    productType(id: ID!): ProductType
+    productTypes: [ProductType]
   }
   type Mutation {
     createAuthor(name: String, age: Int): Author
@@ -58,6 +62,7 @@ const typeDefs = gql`
       isAddedBtn: Boolean
       quantity: Int
       imgUrl: String
+      productType: ID!
     ): Product
     updateProduct(
       id: ID!
@@ -69,6 +74,7 @@ const typeDefs = gql`
       isAddedBtn: Boolean
       quantity: Int
       imgUrl: String
+      productType: ID
     ): Product
     createProductType(productTypeName: String!): ProductType
     createUser(name: String!, email: String!, password: String!): User
