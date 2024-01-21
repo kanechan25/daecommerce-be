@@ -154,9 +154,9 @@ const mongoDataMethods = {
       throw new Error("Error creating user")
     }
   },
-  updateUser: async ({ id, name, email, password, favourites }) => {
+  updateUser: async ({ id, name, email, password, favourites, inCart }) => {
     try {
-      const user = await User.findByIdAndUpdate(id, { name, email, password, favourites }, { new: true })
+      const user = await User.findByIdAndUpdate(id, { name, email, password, favourites, inCart }, { new: true })
       return user
     } catch (err) {
       throw new Error("Error updating user")
