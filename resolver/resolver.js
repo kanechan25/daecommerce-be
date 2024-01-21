@@ -35,7 +35,7 @@ const resolver = {
       return products
     },
     inCart: async (parent, args, context) => {
-      const inCartIds = parent.favourites || []
+      const inCartIds = parent.inCart || []
       const inCart = await Promise.all(inCartIds.map((productId) => context.mongoDataMethods.getProduct(productId)))
       return inCart
     }
