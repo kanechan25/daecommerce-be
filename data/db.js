@@ -1,6 +1,8 @@
 const Author = require("../models/Author")
 const Book = require("../models/Book")
 const User = require("../models/User")
+const Product = require("../models/Product")
+// const ProductType = require("../models/ProductType")
 
 const mongoDataMethods = {
   createAuthor: async (args) => {
@@ -16,9 +18,92 @@ const mongoDataMethods = {
   getAllAuthors: async () => await Author.find(),
   getAuthorById: async (id) => await Author.findById(id),
 
-  getUser: async ({ email }) => {
+  // daecommerce app
+  // createProductType: async ({ productTypeName }) => {
+  //   try {
+  //     const productType = new ProductType({
+  //       productTypeName
+  //     })
+  //     await productType.save()
+  //     return productType
+  //   } catch (err) {
+  //     throw new Error("Error creating productType")
+  //   }
+  // },
+  // updateProductType: async ({ id, productTypeName }) => {
+  //   try {
+  //     const productType = await ProductType.findByIdAndUpdate(id, { productTypeName }, { new: true })
+  //     return productType
+  //   } catch (err) {
+  //     throw new Error("Error updating productType")
+  //   }
+  // },
+  // getProductTypes: async () => {
+  //   try {
+  //     const productTypes = await ProductType.find()
+  //     console.log("productTypes", productTypes)
+  //     return productTypes
+  //   } catch (err) {
+  //     throw new Error("Error retrieving productTypes")
+  //   }
+  // },
+  // getProductType: async (id) => {
+  //   try {
+  //     const productType = await ProductType.findById(id)
+  //     return productType
+  //   } catch (err) {
+  //     throw new Error("Error retrieving productType")
+  //   }
+  // },
+  createProduct: async ({ title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl }) => {
     try {
-      const user = await User.findOne(email)
+      const product = new Product({
+        title,
+        description,
+        price,
+        ratings,
+        reviews,
+        isAddedBtn,
+        quantity,
+        imgUrl
+      })
+      await product.save()
+      return product
+    } catch (err) {
+      throw new Error("Error creating product")
+    }
+  },
+  updateProduct: async ({ id, title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl }) => {
+    try {
+      const product = await Product.findByIdAndUpdate(
+        id,
+        { title, description, price, ratings, reviews, isAddedBtn, quantity, imgUrl },
+        { new: true }
+      )
+      return product
+    } catch (err) {
+      throw new Error("Error updating product")
+    }
+  },
+  getProducts: async () => {
+    try {
+      const products = await Product.find()
+      return products
+    } catch (err) {
+      throw new Error("Error retrieving products")
+    }
+  },
+  getProduct: async (id) => {
+    try {
+      const product = await Product.findById(id)
+      return product
+    } catch (err) {
+      throw new Error("Error retrieving product")
+    }
+  },
+  getUser: async (email) => {
+    try {
+      const user = await User.findOne({ email: email })
       return user
     } catch (err) {
       throw new Error("Error retrieving user")
@@ -32,18 +117,18 @@ const mongoDataMethods = {
       throw new Error("Error retrieving users")
     }
   },
-  createUser: async ({ name, email, password }) => {
+  createUser: async ({ name, email, password, favourites }) => {
     try {
-      const user = new User({ name, email, password })
+      const user = new User({ name, email, password, favourites })
       await user.save()
       return user
     } catch (err) {
       throw new Error("Error creating user")
     }
   },
-  updateUser: async ({ id, name, email, password }) => {
+  updateUser: async ({ id, name, email, password, favourites }) => {
     try {
-      const user = await User.findByIdAndUpdate(id, { name, email, password }, { new: true })
+      const user = await User.findByIdAndUpdate(id, { name, email, password, favourites }, { new: true })
       return user
     } catch (err) {
       throw new Error("Error updating user")

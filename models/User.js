@@ -14,6 +14,23 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  favourites: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product"
+    }
+  ],
+  inCart: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product"
+    }
+  ]
 })
-module.exports = mongoose.model("User", UserSchema)
+UserSchema.set("toObject", { virtuals: true })
+UserSchema.set("toJSON", { virtuals: true })
+UserSchema.path("favourites").default(() => [])
+UserSchema.path("inCart").default(() => [])
+
+module.exports = mongoose.model("users", UserSchema)
